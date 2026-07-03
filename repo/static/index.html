@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduCon | Информатика 11 класс | Тесты для подготовки к ЕНТ</title>
+<style>
+  :root {
+    --primary: #E4E6EC;
+    --accent: #2DD4BF;
+    --pop: #FF7A93;
+    --purple: #8C7CFF;
+    --amber: #FFB454;
+    --bg: #0F1117;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+    color: #DDE1E8;
+  }
+  header {
+    background: #171A24;
+    color: #F2F4F8;
+    padding: 36px 20px 28px;
+    text-align: center;
+    border-bottom: 3px solid #2DD4BF;
+  }
+  header h1 { margin: 0 0 8px 0; font-size: 1.7rem; }
+  header p { margin: 0; opacity: 0.8; font-size: 0.95rem; }
+  header .brand {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #2DD4BF;
+    font-family: 'DejaVu Sans Mono', monospace;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+  .overall-card {
+    background: #171A24;
+    border: 1.5px solid #262A38;
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .overall-card .stat { text-align: center; }
+  .overall-card .stat .num {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #2DD4BF;
+    font-family: 'DejaVu Sans Mono', monospace;
+  }
+  .overall-card .stat .lbl {
+    font-size: 0.72rem;
+    color: #A7ADBB;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .nickname-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #C3C8D4;
+  }
+  .nickname-row input {
+    background: #0F1117;
+    border: 1px solid #33384A;
+    color: #E4E6EC;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    width: 130px;
+  }
+  .nickname-row button {
+    background: #262A38;
+    border: none;
+    color: #C3C8D4;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  .nickname-row button:hover { background: #33384A; }
+
+  h2.section-title {
+    font-size: 1rem;
+    font-family: 'DejaVu Sans Mono', monospace;
+    color: #7A8093;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 30px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #262A38;
+  }
+
+  .test-list { display: flex; flex-direction: column; gap: 10px; }
+  .test-card {
+    background: #171A24;
+    border: 1.5px solid #262A38;
+    border-left: 3px solid #8C7CFF;
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .test-card:hover { border-color: #2DD4BF; background: #1B1F2B; }
+  .test-card .left { display: flex; flex-direction: column; gap: 3px; }
+  .test-card .num {
+    font-family: 'DejaVu Sans Mono', monospace;
+    font-size: 0.72rem;
+    color: #8C7CFF;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .test-card .title { font-size: 0.98rem; font-weight: 600; color: #F2F4F8; }
+  .test-card .right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .test-card .score-pill {
+    font-family: 'DejaVu Sans Mono', monospace;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: #262A38;
+    color: #A7ADBB;
+  }
+  .test-card .score-pill.done {
+    background: #10221E;
+    color: #2DD4BF;
+    border: 1px solid #1F4A3F;
+  }
+  .test-card .arrow { color: #33384A; font-size: 1.2rem; }
+
+  .final-card {
+    border-left-color: #FFB454;
+  }
+  .final-card .num { color: #FFB454; }
+
+  #leaderboardBox {
+    background: #171A24;
+    border: 1.5px solid #262A38;
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .prize-banner {
+    background: #241D14;
+    border: 1px solid #5A4620;
+    border-left: 3px solid #FFB454;
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 0.88rem;
+    color: #DDE1E8;
+  }
+  .prize-banner b { color: #FFB454; }
+  table.lb-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  table.lb-table th {
+    text-align: left;
+    font-family: 'DejaVu Sans Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: #7A8093;
+    padding: 6px 8px;
+    border-bottom: 1px solid #262A38;
+  }
+  table.lb-table td {
+    padding: 8px;
+    border-bottom: 1px solid #1E2130;
+  }
+  table.lb-table tr:last-child td { border-bottom: none; }
+  .rank { font-family: 'DejaVu Sans Mono', monospace; font-weight: bold; width: 30px; }
+  .lb-empty {
+    text-align: center;
+    color: #7A8093;
+    font-size: 0.88rem;
+    padding: 20px 0;
+  }
+  select#lbSelect {
+    background: #0F1117;
+    border: 1px solid #33384A;
+    color: #E4E6EC;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+  }
+  .lb-mode-note {
+    font-size: 0.75rem;
+    color: #7A8093;
+    margin-top: 10px;
+    font-style: italic;
+  }
+  footer {
+    text-align: center;
+    padding: 30px 16px 40px;
+    color: #4A4F5C;
+    font-size: 0.78rem;
+    font-family: 'DejaVu Sans Mono', monospace;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Информатика 11 класс</h1>
+  <p>Тесты для подготовки к ЕНТ &middot; 10 тем + итоговый тест</p>
+  <div class="brand">by Azamat</div>
+</header>
+
+<div class="container">
+
+  <div class="overall-card">
+    <div class="nickname-row">
+      <span>Ты:</span>
+      <input type="text" id="nickInput" placeholder="твоё имя">
+      <button onclick="saveNick()">Сохранить</button>
+    </div>
+    <div class="stat">
+      <div class="num" id="statCompleted">0/10</div>
+      <div class="lbl">тем пройдено</div>
+    </div>
+    <div class="stat">
+      <div class="num" id="statAvg">0%</div>
+      <div class="lbl">средний результат</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Темы</h2>
+  <div class="test-list" id="testList"></div>
+
+  <h2 class="section-title">Итоговый тест</h2>
+  <div class="test-list" id="finalList"></div>
+
+  <h2 class="section-title">Конспекты (PDF)</h2>
+  <div class="test-list" id="pdfList"></div>
+
+  <h2 class="section-title">Топ учеников</h2>
+  <div id="leaderboardBox">
+    <div class="prize-banner">
+      <b>Приз:</b> топ-3 ученика по результатам итогового теста получают сертификат Zein Academy и бонусный балл к оценке. Место в топе считается по проценту правильных ответов.
+    </div>
+    <select id="lbSelect" onchange="loadLeaderboard()">
+      <option value="">Общий рейтинг (среднее по всем темам)</option>
+      <option value="final">Итоговый тест</option>
+      <option value="tema1">Тема 1: Устройства компьютера</option>
+      <option value="tema2">Тема 2: Кодирование и логика</option>
+      <option value="tema3">Тема 3: Компьютерные сети</option>
+      <option value="tema4">Тема 4: Электронные таблицы</option>
+      <option value="tema5">Тема 5: Python</option>
+      <option value="tema6">Тема 6: Web-проектирование</option>
+      <option value="tema7">Тема 7: База данных</option>
+      <option value="tema8">Тема 8: Информационная безопасность</option>
+      <option value="tema9">Тема 9: Современные ИТ-процессы</option>
+      <option value="tema10">Тема 10: IT Startup</option>
+    </select>
+    <div id="lbContent"></div>
+    <div class="lb-mode-note" id="lbNote"></div>
+  </div>
+
+</div>
+
+<footer>EDUCON &middot; ZEIN ACADEMY</footer>
+
+<script src="progress.js"></script>
+<script>
+const TESTS = [
+  { id: "tema1", file: "test_tema1_ustroistva_kompyutera.html", title: "Устройства компьютера. Аппаратное и программное обеспечение" },
+  { id: "tema2", file: "test_tema2_kodirovanie_logika.html", title: "Представление, измерение и кодирование информации" },
+  { id: "tema3", file: "test_tema3_komp_seti.html", title: "Компьютерные сети" },
+  { id: "tema4", file: "test_tema4_excel.html", title: "Электронные таблицы" },
+  { id: "tema5", file: "test_tema5_python.html", title: "Программирование на Python" },
+  { id: "tema6", file: "test_tema6_web.html", title: "Web-проектирование" },
+  { id: "tema7", file: "test_tema7_bazy_dannyh.html", title: "База данных" },
+  { id: "tema8", file: "test_tema8_infobezopasnost.html", title: "Информационная безопасность" },
+  { id: "tema9", file: "test_tema9_sovremennye_it.html", title: "Современные ИТ-процессы" },
+  { id: "tema10", file: "test_tema10_it_startup.html", title: "IT Startup" }
+];
+const FINAL_TEST = { id: "final", file: "final_test.html", title: "Итоговый тест (все темы)" };
+const PDFS = [
+  { file: "pdfs/tema1-ustroystva-kompyutera.pdf", title: "Тема 1: Устройства компьютера" },
+  { file: "pdfs/tema2-kodirovanie-logika.pdf", title: "Тема 2: Кодирование и логика" },
+  { file: "pdfs/tema3-komputernye-seti.pdf", title: "Тема 3: Компьютерные сети" },
+  { file: "pdfs/tema4-elektronnye-tablicy.pdf", title: "Тема 4: Электронные таблицы" },
+  { file: "pdfs/tema5-python.pdf", title: "Тема 5: Python" },
+  { file: "pdfs/tema6-web-proektirovanie.pdf", title: "Тема 6: Web-проектирование" },
+  { file: "pdfs/tema7-baza-dannyh.pdf", title: "Тема 7: База данных" },
+  { file: "pdfs/tema8-infobezopasnost.pdf", title: "Тема 8: Информационная безопасность" },
+  { file: "pdfs/tema9-sovremennye-it.pdf", title: "Тема 9: Современные ИТ-процессы" },
+  { file: "pdfs/tema10-it-startup.pdf", title: "Тема 10: IT Startup" },
+  { file: "pdfs/shpargalka-vse-temy.pdf", title: "Шпаргалка: все темы" }
+];
+
+function renderNick() {
+  document.getElementById('nickInput').value = EduConProgress.getNickname();
+}
+function saveNick() {
+  const v = document.getElementById('nickInput').value.trim();
+  if (v) {
+    EduConProgress.setNickname(v);
+    loadLeaderboard();
+  }
+}
+
+function scorePillHtml(entry) {
+  if (!entry) return '<span class="score-pill">не пройдено</span>';
+  const pct = Math.round((entry.best / entry.total) * 100);
+  return `<span class="score-pill done">${entry.best}/${entry.total} (${pct}%)</span>`;
+}
+
+function renderLists() {
+  const progress = EduConProgress.getProgress();
+
+  const listEl = document.getElementById('testList');
+  listEl.innerHTML = TESTS.map((t, i) => {
+    const entry = progress[t.id];
+    return `<a class="test-card" href="${t.file}">
+      <div class="left">
+        <span class="num">Тема ${i+1}</span>
+        <span class="title">${t.title}</span>
+      </div>
+      <div class="right">
+        ${scorePillHtml(entry)}
+        <span class="arrow">&rarr;</span>
+      </div>
+    </a>`;
+  }).join('');
+
+  const finalEntry = progress[FINAL_TEST.id];
+  document.getElementById('finalList').innerHTML = `
+    <a class="test-card final-card" href="${FINAL_TEST.file}">
+      <div class="left">
+        <span class="num">40 вопросов &middot; все темы</span>
+        <span class="title">${FINAL_TEST.title}</span>
+      </div>
+      <div class="right">
+        ${scorePillHtml(finalEntry)}
+        <span class="arrow">&rarr;</span>
+      </div>
+    </a>`;
+
+  document.getElementById('pdfList').innerHTML = PDFS.map((p) => {
+    return `<a class="test-card" href="${p.file}" target="_blank" rel="noopener">
+      <div class="left">
+        <span class="num">PDF</span>
+        <span class="title">${p.title}</span>
+      </div>
+      <div class="right">
+        <span class="arrow">&darr;</span>
+      </div>
+    </a>`;
+  }).join('');
+
+  const ids = TESTS.map(t => t.id);
+  const stats = EduConProgress.getOverallStats(ids);
+  document.getElementById('statCompleted').textContent = stats.completed + '/' + stats.totalTests;
+  document.getElementById('statAvg').textContent = stats.avgPct + '%';
+}
+
+async function loadLeaderboard() {
+  const testId = document.getElementById('lbSelect').value;
+  const contentEl = document.getElementById('lbContent');
+  const noteEl = document.getElementById('lbNote');
+  contentEl.innerHTML = '<div class="lb-empty">Загрузка...</div>';
+
+  const result = await EduConProgress.fetchLeaderboard(testId);
+
+  if (!result.rows.length) {
+    contentEl.innerHTML = '<div class="lb-empty">Пока никто не проходил тесты. Стань первым!</div>';
+  } else if (testId) {
+    const rows = result.rows.slice(0, 20).map((r, i) => {
+      const medal = i === 0 ? '\u{1F947}' : i === 1 ? '\u{1F948}' : i === 2 ? '\u{1F949}' : (i + 1);
+      return `<tr><td class="rank">${medal}</td><td>${r.nickname}</td><td>${r.score}/${r.total}</td><td>${r.pct}%</td></tr>`;
+    }).join('');
+    contentEl.innerHTML = `<table class="lb-table"><tr><th></th><th>Ученик</th><th>Балл</th><th>%</th></tr>${rows}</table>`;
+  } else {
+    const rows = result.rows.slice(0, 20).map((r, i) => {
+      const medal = i === 0 ? '\u{1F947}' : i === 1 ? '\u{1F948}' : i === 2 ? '\u{1F949}' : (i + 1);
+      const pct = r.pct !== undefined ? r.pct : Math.round((r.score / r.total) * 100);
+      return `<tr><td class="rank">${medal}</td><td>${r.nickname || r.test_title}</td><td>${pct}%</td></tr>`;
+    }).join('');
+    contentEl.innerHTML = `<table class="lb-table"><tr><th></th><th>Ученик</th><th>%</th></tr>${rows}</table>`;
+  }
+
+  noteEl.textContent = result.source === 'server'
+    ? 'Общий рейтинг всех учеников (сервер подключён).'
+    : 'Backend для общего рейтинга ещё не подключён - показаны только результаты этого устройства. См. backend_leaderboard_example.py.';
+}
+
+renderNick();
+renderLists();
+loadLeaderboard();
+</script>
+
+</body>
+</html>

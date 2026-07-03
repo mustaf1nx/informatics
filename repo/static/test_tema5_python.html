@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тест: Программирование на языке Python</title>
+<style>
+  :root {
+    --primary: #E4E6EC;
+    --accent: #2DD4BF;
+    --pop: #FF7A93;
+    --correct: #2DD4BF;
+    --wrong: #FF7A93;
+    --bg: #0F1117;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+    color: #DDE1E8;
+  }
+  header {
+    background: #171A24;
+    color: #F2F4F8;
+    padding: 24px 20px;
+    text-align: center;
+    border-bottom: 3px solid #2DD4BF;
+  }
+  header h1 { margin: 0 0 6px 0; font-size: 1.3rem; }
+  header p { margin: 0; opacity: 0.85; font-size: 0.9rem; font-family: 'DejaVu Sans Mono', monospace; }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  .progress-wrap {
+    background: #171A24;
+    border: 1.5px solid #262A38;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 10px;
+    z-index: 10;
+    color: #C3C8D4;
+  }
+  .progress-bar-bg {
+    background: #262A38;
+    border-radius: 6px;
+    height: 8px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .progress-bar {
+    background: var(--accent);
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s;
+  }
+  .question {
+    background: #171A24;
+    border: 1.5px solid #262A38;
+    border-left: 3px solid #8C7CFF;
+    border-radius: 4px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    color: #DDE1E8;
+  }
+  .qtext {
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  .qnum {
+    color: var(--accent);
+    margin-right: 6px;
+  }
+  .multi-hint {
+    font-size: 0.78rem;
+    color: #7A8093;
+    font-weight: normal;
+    display: block;
+    margin-top: 2px;
+  }
+  .option {
+    display: block;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border: 1.5px solid #262A38;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 0.95rem;
+    color: #DDE1E8;
+  }
+  .option:hover { border-color: var(--accent); background: #10221E; }
+  .option.selected {
+    border-color: #8C7CFF;
+    background: #1B1A33;
+    font-weight: 600;
+  }
+  .option.correct {
+    border-color: var(--correct);
+    background: #10221E;
+    color: #DDE1E8;
+  }
+  .option.wrong {
+    border-color: var(--wrong);
+    background: #2A1418;
+    color: #DDE1E8;
+  }
+  .option input { margin-right: 8px; }
+  #submitBtn {
+    display: block;
+    width: 100%;
+    background: #2DD4BF;
+    color: #0F1117;
+    border: none;
+    padding: 14px;
+    font-size: 1.05rem;
+    font-family: 'DejaVu Sans Mono', monospace;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  #submitBtn:hover { background: #5CE6D5; }
+  #submitBtn:disabled { background: #33384A; color: #7A8093; cursor: not-allowed; }
+  #resultBox {
+    display: none;
+    background: #171A24;
+    border: 1.5px solid #262A38;
+    border-radius: 6px;
+    padding: 24px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  #resultBox h2 { color: var(--primary); margin-top: 0; }
+  #scoreCircle {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #2DD4BF;
+    font-family: 'DejaVu Sans Mono', monospace;
+  }
+  #retryBtn {
+    background: #2DD4BF;
+    color: #0F1117;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    font-weight: bold;
+  }
+  .explain {
+    font-size: 0.85rem;
+    color: #A7ADBB;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed #33384A;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Программирование на языке Python. Алгоритмы и программы</h1>
+  <p>Тест по информатике &middot; 11 класс &middot; подготовка к ЕНТ</p>
+  <p style="margin-top:4px; font-size:0.78rem; letter-spacing:1px; text-transform:uppercase; opacity:0.8;">by Azamat</p>
+</header>
+
+<div class="container">
+
+  <div class="progress-wrap">
+    <div style="display:flex; justify-content:space-between; font-size:0.85rem; color:#555;">
+      <span>Отвечено: <span id="answeredCount">0</span> из <span id="totalCount">0</span></span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar" id="progressBar"></div></div>
+  </div>
+
+  <div id="resultBox">
+    <h2>Результат теста</h2>
+    <div id="scoreCircle">0 / 0</div>
+    <p id="scoreMsg"></p>
+    <button id="retryBtn" onclick="resetQuiz()">Пройти заново</button>
+  </div>
+
+  <div id="quizForm"></div>
+
+  <button id="submitBtn" onclick="checkAnswers()">Проверить ответы</button>
+
+</div>
+
+<script src="progress.js"></script>
+<script>
+const questions = [
+  {
+    q: "Функция, которая вводит данные с клавиатуры в Python:",
+    options: ["print()", "input()", "int()", "type()"],
+    correct: [1],
+    explain: "input() считывает строку, введённую пользователем с клавиатуры."
+  },
+  {
+    q: "Чему равно 25 // 7?",
+    options: ["3", "4", "3.57", "25"],
+    correct: [0],
+    explain: "// - целочисленное деление: 25 // 7 = 3 (без остатка)."
+  },
+  {
+    q: "Чему равно 25 % 7?",
+    options: ["3", "4", "18", "0"],
+    correct: [1],
+    explain: "% - остаток от деления: 25 = 3×7 + 4, значит 25 % 7 = 4."
+  },
+  {
+    q: "Функция, определяющая тип переменной:",
+    options: ["def()", "input()", "type()", "len()"],
+    correct: [2],
+    explain: "type(x) возвращает тип переданной переменной x."
+  },
+  {
+    q: "Цикл, который применяется, когда число повторов заранее известно:",
+    options: ["while", "if", "for", "def"],
+    correct: [2],
+    explain: "for используется, когда известно количество итераций (например, for i in range(10))."
+  },
+  {
+    q: "Инструкция, которая досрочно прерывает цикл:",
+    options: ["continue", "break", "pass", "return"],
+    correct: [1],
+    explain: "break немедленно завершает выполнение цикла."
+  },
+  {
+    q: "Инструкция, пропускающая текущую итерацию цикла:",
+    options: ["break", "continue", "return", "exit"],
+    correct: [1],
+    explain: "continue пропускает оставшуюся часть текущей итерации и переходит к следующей."
+  },
+  {
+    q: "Ключевое слово для создания процедуры или функции в Python:",
+    options: ["func", "proc", "def", "lambda"],
+    correct: [2],
+    explain: "def - ключевое слово для объявления функции или процедуры в Python."
+  },
+  {
+    q: "Что отличает функцию от процедуры?",
+    options: ["функция быстрее", "функция возвращает значение через return", "у функции нет аргументов", "ничего не отличает"],
+    correct: [1],
+    explain: "Функция возвращает значение с помощью return, процедура - нет."
+  },
+  {
+    q: "Переменная, известная только внутри функции:",
+    options: ["глобальная", "статическая", "локальная", "константная"],
+    correct: [2],
+    explain: "Локальная переменная существует и видна только внутри функции/процедуры."
+  },
+  {
+    q: "Ключевое слово для изменения глобальной переменной внутри функции:",
+    options: ["local", "global", "nonlocal", "static"],
+    correct: [1],
+    explain: "global позволяет изменить значение глобальной переменной изнутри функции."
+  },
+  {
+    q: "Способ организации подпрограммы, при котором она вызывает сама себя:",
+    options: ["итерация", "рекурсия", "ветвление", "сортировка"],
+    correct: [1],
+    explain: "Рекурсия - подпрограмма, обращающаяся сама к себе в ходе выполнения."
+  },
+  {
+    q: "Обязательный элемент любой рекурсивной функции:",
+    options: ["цикл for", "базовый случай (условие остановки)", "глобальная переменная", "массив"],
+    correct: [1],
+    explain: "Без базового случая (условия остановки) рекурсия будет выполняться бесконечно."
+  },
+  {
+    q: "Метод, разбивающий строку на список подстрок:",
+    options: ["join()", "replace()", "split()", "sort()"],
+    correct: [2],
+    explain: "split() делит строку на список подстрок по разделителю."
+  },
+  {
+    q: "Метод, объединяющий список строк в одну строку:",
+    options: ["split()", "join()", "replace()", "sorted()"],
+    correct: [1],
+    explain: "join() объединяет элементы списка строк в одну строку через разделитель."
+  },
+  {
+    q: "Функция для сортировки массива A по возрастанию без изменения самого A:",
+    options: ["A.sort()", "sorted(A)", "A.reverse()", "A.append()"],
+    correct: [1],
+    explain: "sorted(A) возвращает новый отсортированный список, не меняя исходный A."
+  },
+  {
+    q: "В неориентированном графе линии, соединяющие вершины, называются:",
+    options: ["дуги", "рёбра", "узлы", "ветви"],
+    correct: [1],
+    explain: "В неориентированном графе связи между вершинами называются рёбрами (в ориентированном - дугами)."
+  },
+  {
+    q: "Алгоритм обхода графа, идущий по одному пути до конца перед возвратом:",
+    options: ["BFS", "сортировка", "DFS", "рекурсия массива"],
+    correct: [2],
+    explain: "DFS (поиск в глубину) идёт по пути до конца, затем возвращается назад."
+  },
+  {
+    q: "Способы представления графа в программе (выберите все верные):",
+    options: ["матрица смежности", "список смежности", "таблица истинности", "диаграмма Excel"],
+    correct: [0,1],
+    explain: "Граф представляется матрицей смежности или списком смежности. Таблица истинности и диаграмма Excel сюда не относятся.",
+    multi: true
+  },
+  {
+    q: "Базовые типы данных Python (выберите все верные):",
+    options: ["int", "float", "str", "bool", "table"],
+    correct: [0,1,2,3],
+    explain: "int, float, str, bool - базовые типы данных Python. «table» не является типом данных Python.",
+    multi: true
+  }
+];
+const form = document.getElementById('quizForm');
+const totalCountEl = document.getElementById('totalCount');
+totalCountEl.textContent = questions.length;
+
+function renderQuiz() {
+  form.innerHTML = '';
+  questions.forEach((item, qi) => {
+    const div = document.createElement('div');
+    div.className = 'question';
+    div.dataset.qi = qi;
+    const letters = ['A','B','C','D','E','F'];
+    let optsHtml = '';
+    item.options.forEach((opt, oi) => {
+      const inputType = item.multi ? 'checkbox' : 'radio';
+      optsHtml += `<label class="option" data-oi="${oi}">
+        <input type="${inputType}" name="q${qi}" value="${oi}" onchange="selectOption(${qi}, ${oi}, this)">
+        ${letters[oi]}) ${opt}
+      </label>`;
+    });
+    div.innerHTML = `
+      <div class="qtext"><span class="qnum">${qi+1}.</span>${item.q}
+        ${item.multi ? '<span class="multi-hint">(несколько верных ответов)</span>' : ''}
+      </div>
+      ${optsHtml}
+      <div class="explain" id="explain${qi}">${item.explain}</div>
+    `;
+    form.appendChild(div);
+  });
+}
+
+const userAnswers = {};
+
+function selectOption(qi, oi, inputEl) {
+  const qDiv = form.querySelector(`[data-qi="${qi}"]`);
+  const isMulti = questions[qi].multi;
+  if (!userAnswers[qi]) userAnswers[qi] = new Set();
+
+  if (isMulti) {
+    if (inputEl.checked) userAnswers[qi].add(oi);
+    else userAnswers[qi].delete(oi);
+    if (userAnswers[qi].size === 0) delete userAnswers[qi];
+  } else {
+    userAnswers[qi] = new Set([oi]);
+  }
+
+  qDiv.querySelectorAll('.option').forEach(optLabel => {
+    const optOi = parseInt(optLabel.dataset.oi);
+    const input = optLabel.querySelector('input');
+    optLabel.classList.toggle('selected', input.checked);
+  });
+
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = Object.keys(userAnswers).length;
+  document.getElementById('answeredCount').textContent = answered;
+  const pct = Math.round((answered / questions.length) * 100);
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function checkAnswers() {
+  let score = 0;
+  questions.forEach((item, qi) => {
+    const qDiv = form.querySelector(`[data-qi="${qi}"]`);
+    const userSet = userAnswers[qi] || new Set();
+    const correctSet = new Set(item.correct);
+    const isCorrect = userSet.size === correctSet.size && [...userSet].every(v => correctSet.has(v));
+    if (isCorrect) score++;
+
+    qDiv.querySelectorAll('.option').forEach(optLabel => {
+      const oi = parseInt(optLabel.dataset.oi);
+      const input = optLabel.querySelector('input');
+      input.disabled = true;
+      if (correctSet.has(oi)) optLabel.classList.add('correct');
+      else if (userSet.has(oi)) optLabel.classList.add('wrong');
+    });
+    document.getElementById('explain' + qi).style.display = 'block';
+  });
+
+  document.getElementById('submitBtn').style.display = 'none';
+  const resultBox = document.getElementById('resultBox');
+  resultBox.style.display = 'block';
+  document.getElementById('scoreCircle').textContent = score + ' / ' + questions.length;
+  const pct = Math.round((score / questions.length) * 100);
+  let msg = '';
+  if (pct >= 85) msg = 'Отличный результат! Тема усвоена.';
+  else if (pct >= 60) msg = 'Хороший результат, но стоит повторить некоторые вопросы.';
+  else msg = 'Рекомендуется повторить тему и пройти тест ещё раз.';
+  const saved = (typeof EduConProgress !== 'undefined')
+    ? EduConProgress.recordResult('tema5', 'Программирование на языке Python. Алгоритмы и программы', score, questions.length)
+    : null;
+  let bestMsg = '';
+  if (saved && saved.isNewBest) bestMsg = ' \uD83C\uDFC6 Новый личный рекорд!';
+  document.getElementById('scoreMsg').textContent = msg + ` (${pct}%)` + bestMsg;
+  resultBox.scrollIntoView({behavior: 'smooth'});
+}
+
+function resetQuiz() {
+  for (const key in userAnswers) delete userAnswers[key];
+  document.getElementById('resultBox').style.display = 'none';
+  document.getElementById('submitBtn').style.display = 'block';
+  updateProgress();
+  renderQuiz();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+renderQuiz();
+if (typeof EduConProgress !== 'undefined') { EduConProgress.ensureNickname(); }
+</script>
+
+</body>
+</html>
