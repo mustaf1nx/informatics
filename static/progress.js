@@ -17,7 +17,7 @@ const EduConProgress = (function () {
 
   // Впиши сюда адрес своего backend, например 'https://zeinacademy.up.railway.app'
   // Оставь пустой строкой, если backend пока не поднят.
-  const API_BASE = '';
+  const API_BASE = 'https://informatics.up.railway.app/';
 
   function loadAll() {
     try {
